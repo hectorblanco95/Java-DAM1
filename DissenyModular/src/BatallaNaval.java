@@ -34,18 +34,24 @@ public class BatallaNaval{
 
 	static void colocaBarco(char[][] barcos, int mida, char orient){
 
-		// int ranFila = random(0..9);
-		// int ranCol = random(0..9);
+		int ranFila = (int) (Math.random() * 9);
+		int ranCol = (int) (Math.random() * 9);
 
 		if(orient == 'H'){
-
+			
+			while (ranCol+mida>9){
+				ranCol = (int) (Math.random() * 9);
+			}
 			// Comprobar que el barco cabe en horizontal, sumando mida a la posici�n random del barco
 			// Si no cabe, generar nuevas filas y columnas aleatorias
 			// Comprobar que el barco tiene todas las posiciones libres
 			// Si hay alguna 'B' en alguna posici�n, generar nuevas filas y columnas aleatorias
 		}
 		if(orient == 'V'){
-
+			
+			while (ranFila+mida>9){
+				ranFila = (int) (Math.random() * 9);
+			}
 			// Lo mismo para la orientaci�n vertical
 
 		}
