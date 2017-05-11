@@ -5,16 +5,11 @@ public class BatallaNaval{
 		char[][] barcos = new char[10][10];
 
 		for (int i = 0; i < barcos.length; i++) {
-
 			for (int j = 0; j < barcos[i].length; j++) {
-
 				barcos[i][j] = '*';
 				System.out.print (barcos[i][j]);
-
 			}
-
 			System.out.println ("");
-
 		}
 
 		System.out.println ("");
@@ -38,21 +33,32 @@ public class BatallaNaval{
 		int ranCol = (int) (Math.random() * 9);
 
 		if(orient == 'H'){
-			
+			// Comprobar que el barco cabe en horizontal, sumando mida a la posici�n random del barco
+			// Si no cabe, generar nuevas filas y columnas aleatorias
 			while (ranCol+mida>9){
 				ranCol = (int) (Math.random() * 9);
 			}
-			// Comprobar que el barco cabe en horizontal, sumando mida a la posici�n random del barco
-			// Si no cabe, generar nuevas filas y columnas aleatorias
 			// Comprobar que el barco tiene todas las posiciones libres
-			// Si hay alguna 'B' en alguna posici�n, generar nuevas filas y columnas aleatorias
+			// Si hay alguna 'X' en alguna posici�n, generar nuevas filas y columnas aleatorias
+			for(int i=0;i<mida;i++){
+				if(barcos[ranFila][ranCol+i]!='X'){
+					barcos[ranFila][ranCol+i]='X';
+				} else{
+					while (ranCol+mida>9){
+						ranCol = (int) (Math.random() * 9);
+					}
+					while (ranFila+mida>9){
+						ranFila = (int) (Math.random() * 9);
+					}
+				}
+			}
 		}
 		if(orient == 'V'){
-			
+			// Lo mismo para la orientaci�n vertical
 			while (ranFila+mida>9){
 				ranFila = (int) (Math.random() * 9);
 			}
-			// Lo mismo para la orientaci�n vertical
+			
 
 		}
 
