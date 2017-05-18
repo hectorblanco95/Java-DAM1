@@ -25,6 +25,17 @@ public class BatallaNaval{
 		// Pedir usuario fila y columna a atacar
 
 		// ...
+		
+		for (int i = 0; i < barcos.length; i++) {
+			for (int j = 0; j < barcos[i].length; j++) {
+	
+				System.out.print (barcos[i][j]);
+			}
+			System.out.println ("");
+		}
+
+		System.out.println ("");
+		System.out.println ("");
 	}
 
 	static void colocaBarco(char[][] barcos, int mida, char orient){
@@ -58,9 +69,18 @@ public class BatallaNaval{
 			while (ranFila+mida>9){
 				ranFila = (int) (Math.random() * 9);
 			}
-			
-
+			for(int i=0;i<mida;i++){
+				if(barcos[ranFila+i][ranCol]!='X'){
+					barcos[ranFila+i][ranCol]='X';
+				} else{
+					while (ranCol+mida>9){
+						ranCol = (int) (Math.random() * 9);
+					}
+					while (ranFila+mida>9){
+						ranFila = (int) (Math.random() * 9);
+					}
+				}
+			}
 		}
-
 	}
 }
