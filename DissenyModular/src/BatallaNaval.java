@@ -9,16 +9,16 @@ public class BatallaNaval{
 				barcos[i][j] = '*';
 				System.out.print (barcos[i][j]);
 			}
-			System.out.println ("");
+			System.out.println ();
 		}
 
-		System.out.println ("");
-		System.out.println ("");
+		System.out.println ();
+		System.out.println ();
 
+		colocaBarco(barcos, 5, 'V');
 		colocaBarco(barcos, 4, 'H');
 		colocaBarco(barcos, 3, 'V');
 		colocaBarco(barcos, 2, 'H');
-		colocaBarco(barcos, 1, 'V');
 
 		// Todos los barcos est�n correctamente colocados
 
@@ -31,11 +31,11 @@ public class BatallaNaval{
 	
 				System.out.print (barcos[i][j]);
 			}
-			System.out.println ("");
+			System.out.println ();
 		}
 
-		System.out.println ("");
-		System.out.println ("");
+		System.out.println ();
+		System.out.println ();
 	}
 
 	static void colocaBarco(char[][] barcos, int mida, char orient){
@@ -53,7 +53,11 @@ public class BatallaNaval{
 			// Si hay alguna 'X' en alguna posici�n, generar nuevas filas y columnas aleatorias
 			for(int i=0;i<mida;i++){
 				if(barcos[ranFila][ranCol+i]!='X'){
-					barcos[ranFila][ranCol+i]='X';
+					if(ranFila==0 && barcos[ranFila][ranCol-1]!='X' && barcos[ranFila][ranCol+(mida+1)]!='X'){
+						barcos[ranFila][ranCol+i]='X';
+					} else if(barcos[ranFila][ranCol-1]!='X' && barcos[ranFila][ranCol+(mida+1)]!='X'){
+						barcos[ranFila][ranCol+i]='X';
+					}
 				} else{
 					while (ranCol+mida>9){
 						ranCol = (int) (Math.random() * 9);
@@ -71,7 +75,11 @@ public class BatallaNaval{
 			}
 			for(int i=0;i<mida;i++){
 				if(barcos[ranFila+i][ranCol]!='X'){
-					barcos[ranFila+i][ranCol]='X';
+					if(ranCol==0 && barcos[ranFila-1][ranCol]!='X' && barcos[ranFila+(mida+1)][ranCol]!='X'){
+						barcos[ranFila+i][ranCol]='X';
+					} else if(barcos[ranFila-1][ranCol]!='X' && barcos[ranFila+(mida+1)][ranCol]!='X'){
+						barcos[ranFila+i][ranCol]='X';
+					}
 				} else{
 					while (ranCol+mida>9){
 						ranCol = (int) (Math.random() * 9);
