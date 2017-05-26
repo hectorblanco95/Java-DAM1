@@ -38,11 +38,11 @@ public class BatallaNaval{
 		System.out.println ();
 	}
 
-	static void colocaBarco(char[][] barcos, int mida, char orient){
+	private static void colocaBarco(char[][] barcos, int mida, char orient){
 
 		int ranFila = (int) (Math.random() * 9);
 		int ranCol = (int) (Math.random() * 9);
-		int contX=0;
+
 
 		if(orient == 'H'){
 			// Comprobar que el barco cabe en horizontal, sumando mida a la posici�n random del barco
@@ -52,77 +52,202 @@ public class BatallaNaval{
 			}
 			// Comprobar que el barco tiene todas las posiciones libres
 			// Si hay alguna 'X' en alguna posici�n, generar nuevas filas y columnas aleatorias
-			while (mida!=contX){
-				contX=0;
-				for(int i=0;i<mida;i++){
-					System.out.println("HORIZONTAL -> FILA:"+ ranFila + "COLUMNA:"+ ranCol );
-					if(barcos[ranFila][ranCol+i]!='X'){
-						
-						if(ranFila==0 && barcos[ranFila][ranCol-1]!='X' && barcos[ranFila][ranCol+(mida+1)]!='X'){
-							//barcos[ranFila][ranCol+i]='X';
-							contX++;
-						} else if(barcos[ranFila][ranCol-1]!='X' && barcos[ranFila][ranCol+(mida+1)]!='X'){
-							//barcos[ranFila][ranCol+i]='X';
-							contX++;
-						}
-					} else{
-						while (ranCol+mida>9){
-							ranCol = (int) (Math.random() * 9);
-						}
-						while (ranFila+mida>9){
-							ranFila = (int) (Math.random() * 9);
-						}
+
+
+			if(posicionesLibres(barcos, mida, orient, ranFila, ranCol)){
+				for (int i = 0; i < barcos.length; i++) {
+					for (int j = 0; j < barcos[i].length; j++) {
+						barcos[ranFila][ranCol+i]='X';
+						System.out.print (barcos[i][j]);
 					}
+					System.out.println ();
+				}
+
+			} else{
+				while (ranCol+mida>9){
+					ranCol = (int) (Math.random() * 9);
+				}
+				while (ranFila+mida>9){
+					ranFila = (int) (Math.random() * 9);
 				}
 			}
-			if (mida==contX){
-				for(int i=0;i<mida;i++){
-					barcos[ranFila][ranCol+i]='X';
-				}
-			}
+
+
 		}
 		if(orient == 'V'){
 			// Lo mismo para la orientaci�n vertical
 			while (ranFila+mida>9){
 				ranFila = (int) (Math.random() * 9);
 			}
-			while (mida!=contX){
-				contX=0;
-				for(int i=0;i<mida;i++){
-					System.out.println("VERTICAL -> FILA:"+ ranFila + "COLUMNA:"+ ranCol );
-					if(barcos[ranFila+i][ranCol]!='X'){
-						if(ranCol==0 && barcos[ranFila-1][ranCol]!='X' && barcos[ranFila+(mida+1)][ranCol]!='X'){
-							//barcos[ranFila+i][ranCol]='X';
-							contX++;
-						} else if(barcos[ranFila-1][ranCol]!='X' && barcos[ranFila+(mida+1)][ranCol]!='X'){
-							//barcos[ranFila+i][ranCol]='X';
-							contX++;
-						}
-					} else{
-						while (ranCol+mida>9){
-							ranCol = (int) (Math.random() * 9);
-						}
-						while (ranFila+mida>9){
-							ranFila = (int) (Math.random() * 9);
-						}
+
+			if(posicionesLibres(barcos, mida, orient, ranFila, ranCol)){
+				for (int i = 0; i < barcos.length; i++) {
+					for (int j = 0; j < barcos[i].length; j++) {
+						barcos[ranFila+i][ranCol]='X';
+						System.out.print (barcos[i][j]);
+					}
+					System.out.println ();
+				}
+
+			} else{
+				while (ranCol+mida>9){
+					ranCol = (int) (Math.random() * 9);
+				}
+				while (ranFila+mida>9){
+					ranFila = (int) (Math.random() * 9);
+				}
+			}
+
+		}
+	}
+	private static boolean posicionesLibres(char[][] barcos, int mida, char orient, int ranFila, int ranCol){
+		int cont=0;
+		if(orient == 'H'){
+			if(ranFila==0 && ranCol>0 && ranCol+mida<9){
+				for (int i = ranFila; i < ranFila+2; i++) {
+					for (int j = ranCol-1; j < ranCol+mida+1; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
 					}
 				}
+				if(mida==2)
+					return (cont==8);
+				else if (mida==3)
+					return (cont==10);
+				else if (mida==4)
+					return (cont==12);
+				else if (mida==5)
+					return (cont==14);
 			}
-			if (mida==contX){
-				for(int i=0;i<mida;i++){
-					barcos[ranFila+i][ranCol]='X';
+			else if(ranFila==0 && ranCol==0){
+				for (int i = ranFila; i < ranFila+2; i++) {
+					for (int j = ranCol; j < ranCol+mida+1; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
 				}
+				if(mida==2)
+					return (cont==6);
+				else if (mida==3)
+					return (cont==8);
+				else if (mida==4)
+					return (cont==10);
+				else if (mida==5)
+					return (cont==12);
 			}
-			for (int i = 0; i < barcos.length; i++) {
-				for (int j = 0; j < barcos[i].length; j++) {
-
-					System.out.print (barcos[i][j]);
+			else if(ranFila==0 && ranCol+mida==9){
+				for (int i = ranFila; i < ranFila+2; i++) {
+					for (int j = ranCol-1; j < ranCol+mida; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
 				}
-				System.out.println ();
+				if(mida==2)
+					return (cont==6);
+				else if (mida==3)
+					return (cont==8);
+				else if (mida==4)
+					return (cont==10);
+				else if (mida==5)
+					return (cont==12);
 			}
-
-			System.out.println ();
-			System.out.println ();
+			else if(ranFila>0 && ranFila<9 && ranCol+mida==9){
+				for (int i = ranFila-1; i < ranFila+2; i++) {
+					for (int j = ranCol-1; j < ranCol+mida; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
+				}
+				if(mida==2)
+					return (cont==9);
+				else if (mida==3)
+					return (cont==12);
+				else if (mida==4)
+					return (cont==15);
+				else if (mida==5)
+					return (cont==18);
+			}
+			else if(ranFila==9 && ranCol+mida==9){
+				for (int i = ranFila-1; i < ranFila+1; i++) {
+					for (int j = ranCol-1; j < ranCol+mida; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
+				}
+				if(mida==2)
+					return (cont==6);
+				else if (mida==3)
+					return (cont==8);
+				else if (mida==4)
+					return (cont==10);
+				else if (mida==5)
+					return (cont==12);
+			}
+			else if(ranFila==9 && ranCol+mida<9){
+				for (int i = ranFila-1; i < ranFila+1; i++) {
+					for (int j = ranCol-1; j < ranCol+mida+1; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
+				}
+				if(mida==2)
+					return (cont==8);
+				else if (mida==3)
+					return (cont==10);
+				else if (mida==4)
+					return (cont==12);
+				else if (mida==5)
+					return (cont==14);
+			}
+			else if(ranFila==9 && ranCol==0){
+				for (int i = ranFila-1; i < ranFila+1; i++) {
+					for (int j = ranCol; j < ranCol+mida+1; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
+				}
+				if(mida==2)
+					return (cont==6);
+				else if (mida==3)
+					return (cont==8);
+				else if (mida==4)
+					return (cont==10);
+				else if (mida==5)
+					return (cont==12);
+			}
+			else{
+				for (int i = ranFila-1; i < ranFila+2; i++) {
+					for (int j = ranCol-1; j < ranCol+mida+1; j++) {
+						if (barcos[i][j]!='X')
+							cont++;
+					}
+				}
+				if(mida==2)
+					return (cont==12);
+				else if (mida==3)
+					return (cont==15);
+				else if (mida==4)
+					return (cont==18);
+				else if (mida==5)
+					return (cont==21);
+			}
 		}
+		if(orient == 'V'){
+			for (int i = ranCol-1; i < ranCol+2; i++) {
+				for (int j = ranFila-1; j < ranFila+mida+1; j++) {
+					if(barcos[i][j]!='X')
+						cont++;
+				}
+			}
+			if(mida==2)
+				return (cont==12);
+			else if (mida==3)
+				return (cont==15);
+			else if (mida==4)
+				return (cont==18);
+			else if (mida==5)
+				return (cont==21);
+		}
+		return false;
 	}
 }
